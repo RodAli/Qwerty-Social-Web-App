@@ -8,22 +8,20 @@ app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/'));
 
+// Set up to use a session
+app.use(cookieParser('secretkey'));
+app.use(session({
+    secret: 'secrettkey123'
+}));
+
 // Use body parser
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// Get the index page:
-app.get('/', function(req, res) {
-    res.sendfile('index.html');
-});
+// Routes
 
-app.get('/books', books.findAll);
-
-app.post('/addbook', books.addOne);
-
-app.put('/like/:isbn', books.like);
 
 
 // Start the server
