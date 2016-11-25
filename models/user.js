@@ -9,14 +9,14 @@ var postSchema = new Schema(
         },
         to: {
             type: String, required: true
-        }
+        },
         msg: {
             type: String, required: true
-        }
+        },
         bump: {
             type: Number, default: 0
         }
-    }
+    },
     {
         collection: 'posts'
     }
@@ -27,10 +27,10 @@ var userSchema = new Schema(
     {
         username: {
             type: String, required: true, unique: true
-        }
+        },
         password: {
             type: String, require: true
-        }
+        },
         fname: {
             type: String, required: true
         },
@@ -43,7 +43,7 @@ var userSchema = new Schema(
         posts: [postSchema],
         avgRating: {
             type: Number, default: 0
-        }
+        },
         numOfRatings: {
             type: Number, default: 0
         }

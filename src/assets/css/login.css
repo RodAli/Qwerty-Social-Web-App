@@ -1,0 +1,46 @@
+#registerSection {
+	background-color: #E6E6FA;
+}
+
+.imgDivider {
+	margin: 25px 0 15px 0;
+	text-align: center;
+}
+
+img.loginImage {
+	width: 40%;
+	border-radius: 50%;
+}
+
+form {
+	border: 4px solid #E6E6FA;
+}
+
+input {
+	width: 100%;
+	margin: 10px 0;
+	padding: 15px 20px;
+	display: inline-block;
+	border: 1px solid #bbb7c9;
+	box-sizing: border-box;
+}
+
+button {
+	cursor: pointer;
+    width: 100%;
+	background-color: #8BAABC;
+	color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border: none;
+}
+
+#registerBtn {
+	width: auto;
+	padding: 12px 20px;
+	background-color: #f44336;
+}
+
+.loginContainer {
+	padding: 15px;
+}

@@ -1,11 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var books = require('./routes/routes');
+var cookieParser = require('cookie-parser');
+var session = require('cookie-session');
+var routes = require('./src/routes');
+var path = require('path');
 var app = express();
 
 // Include views, css and scripts
-app.use(express.static(__dirname + '/views'));
-app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/src/assets'));
 app.use(express.static(__dirname + '/'));
 
 // Set up to use a session
@@ -21,9 +23,18 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Routes
-
+app.get('/', routes.startUp);
+app.get('/getCurrentUser', routes.getCurrentUser);
+app.post('/login', routes.login);
+app.post('/logout', routes.logout);
+app.post('/register', routes.register);
+app.get('/allPosts', routes.allPosts);
+app.get('/getUserByName', routes.getUserByName); // Pass in query string??
+app.get('/getPostsForUser', routes.getPostsForUser);
+app.post('/makepost', routes.makePost);
+app.post('/rate', routes.rateUser);
 
 
 // Start the server
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 console.log('Listening on port 3000');
