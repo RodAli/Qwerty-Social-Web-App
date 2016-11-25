@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/login.css" type="text/css">
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="scripts/script.js"></script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="scripts/login.js"></script>
     <title>Qwerty</title>
 </head>
 
@@ -13,14 +13,15 @@
 		<div class="imgDivider">
 	    	<img src="images/image.jpg" class="loginImage">
 	  	</div>
+	  	<h1 id="title">Qwerty</h1>
 	  	<div class="loginContainer">
 		    <label><b>Username</b></label>
-		    <input type="text" placeholder="Enter Username" required>
+		    <input type="text" placeholder="Enter Username" id="inputUsername" required>
 
 		    <label><b>Password</b></label>
-		    <input type="password" placeholder="Enter Password" required>
+		    <input type="password" placeholder="Enter Password" id="inputPassword" required>
 
-		    <button type="submit">Login</button>
+		    <button type="submit" id="submitBtn">Login</button>
 	  	</div>
 	  	<div class="loginContainer" id="registerSection">
 	      <button type="button" id="registerBtn">Register</button>
