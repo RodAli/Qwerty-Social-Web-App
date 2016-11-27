@@ -9,11 +9,16 @@
 </head>
 
 <body> 
-	<form>
-		<div class="imgDivider">
+	  	<h1 id="title">Qwerty</h1>
+
+	  			<div class="imgDivider">
 	    	<img src="images/image.jpg" class="loginImage">
 	  	</div>
-	  	<h1 id="title">Qwerty</h1>
+
+
+	<form>
+	  	 <h2> Login </h2>
+
 	  	<div class="loginContainer">
 		    <label><b>Username</b></label>
 		    <input type="text" placeholder="Enter Username" id="inputUsername" required>
@@ -23,10 +28,51 @@
 
 		    <button type="submit" id="submitBtn">Login</button>
 	  	</div>
-	  	<div class="loginContainer" id="registerSection">
+	  	<!--<div class="loginContainer" id="registerSection">
 	      <button type="button" id="registerBtn">Register</button>
 	    </div>
+	    -->
 	</form>
+
+  <form id="signup" method="post"">
+
+   		<h2> Sign-Up </h2>
+
+        
+        <label id="firstName">
+            <span class="label">First Name: </span>
+            <input type="text" id="first_name" name="first_name" required></input>
+        </label>
+
+        <label id="lastName">
+            <span class="label">Surname: </span>
+            <input type="text" id="last_name" name="last_name" required></input>
+        </label>
+        
+        <label id="userName">
+            <span class="label">Username: </span>
+            <input type="text" id="user_name" name="user_name" required></input>
+        </label>
+
+        <label id="passWord">
+            <span class="label">Password: </span>
+            <input type="passWord" id="pw1" name="pw1" required></input>
+        </label>
+
+        <label id="passWord2">
+            <span class="label">Confirm Password: </span>
+            <input type="password" id="pw2" name="pw2" required></input>
+        </label>
+
+        <!-- Make sure to have a case sensitive reminder to the user signing up -->
+
+        <label id="AboutMe">
+            <span class="label">About Me: </span>
+            <input type="text" id="about_me" name="about_me" required></input>
+        </label>       
+
+        <input id="registerBtn" type="submit" value="Register">
+    </form>
 
 </body>
 </html>

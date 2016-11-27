@@ -4,8 +4,30 @@
  * Return true if there exists a user in the database with the given
  * username, false otherwise.
  */
+
+var fs = require('fs');
+
+var userObj;
+
+fs.readFile('start_users.json', 'utf-8', function(err, data) {
+    if(err) throw err;
+    userObj = JSON.parse(data);
+    //console.log(userObj.users);
+});
+
 function usernameExists(username){
-	// TODO: Somehow check in database if user with this username exists
+
+		var exists = false;
+
+		var user_list = userObj.users;	
+
+		for(var i in user_list){
+			if(user_list[i].username==username){
+				exists = true;
+			}
+		}
+
+		return exists;
 }
 
 exports.startUp = function(req, res){
@@ -45,38 +67,22 @@ exports.registerView = function(req, res){};
 
 
 exports.register = function(req, res){
-	// Check if all fields are met and if the user already exists
-	if (!req.body.hasOwnProperty('username') ||
-		!req.body.hasOwnProperty('pass') ||
-		!req.body.hasOwnProperty('fname') ||
-		!req.body.hasOwnProperty('lname') ||
-		usernameExists(req.body.username)){
-		// Make sure all these elements are here for registering user
-		res.statusCode = 400;
-		return res.json({error: "User already exists or fields not met."});
-	} else {
-		
-		var username = req.body.username;
-		var pass = req.body.pass;
-		var fname = req.body.fname;
-		var lname = req.body.lname;
+	console.log(req.body);
 
-		let user = {
-			"username":username,
-			"pass":pass,
-			"fname":fname,
-			"lname":lname,
-			"aboutme":"",
-			"posts": [],
-        	"avgRating": 0,
-        	"numOfRatings": 0
-		};
+	var usernameChecker = usernameExists(req.body.username);
 
-		//Adding the newuser to the User database
-		User.push(user);
+	//Somehow alert the user if a username is taken.
 
-		return user;
+	if(req.body.match && !usernameChecker){
+
+	var new_user = {"username": req.body.username, "pass":req.body.p_word1, "fname":req.body.firstname, "lname":req.body.lastname,
+					"aboutme":req.body.about_me, "posts":[], "avgRating":0, "numOfRatings":0};
+
+	userObj.users.push(new_user);				
+
 	}
+
+	console.log(userObj);
 };
 
 
