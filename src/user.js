@@ -1,37 +1,17 @@
-var User = require('../models/user');
 "use strict";
 
+var constants = require(__dirname + '/constants');
+var dbAdapter = require(constants.dbAdapter);
 
-/*
- * Return true if there exists a user in the database with the given
- * username, false otherwise.
- */
-function usernameExists(user_name, callback_fcn){
-	// Find user in the databse
-	User.findOne({username: user_name}, function(err, user){
-		// Return whether they exist or not
-		var exist = (user != null);
-		callback_fcn(exist);
-	});
-}
 
 exports.startUp = function(req, res){
 	// Check if session already exists and log in user right away
 	if (req.session.hasOwnProperty("username")){
 		// Login user by sending to news feed page
-		res.render(__dirname + '/views/login.html');			//res.render(__dirname + '/views/newsfeed.html');	change it to this later
+		res.render(constants.loginPage);			//res.render(__dirname + '/views/newsfeed.html');	change it to this later
 	} else {
 		// User not logged in, send to login page
-		res.render(__dirname + '/views/login.html');
-	}
-};
-
-
-exports.getCurrentUser = function(req, res){
-	if (!req.session.username){
-		return res.json({name: ""});
-	} else {
-		return res.json({name: req.session.username});
+		res.render(constants.loginPage);
 	}
 };
 
@@ -41,21 +21,20 @@ exports.login = function(req, res){
 	   	!req.body.hasOwnProperty('pass')){
 		return res.json({msg: "ERROR: username and password required"});
 	} else {
-
-		User.findOne({username: req.body.username}, function(err, user){
-        	if (err) throw err;
+		dbAdapter.getUserByName(req.body.username, function(err, user){
+        	
         	// Check if user exists
-        	if (user == null){
+        	if (user === null){
         		return res.json({msg: "ERROR: Username incorrect"});
-        	} else if (user.pass != req.body.pass){
+        	} else if (user.pass !== req.body.pass){
         		// Check if password is correct
         		return res.json({msg: "ERROR: Password incorrect"});
         	} else {
         		// Login the user, by adding to the session
         		req.session.username = req.body.username;
         		return res.json({msg: "success"});
-        	}	
-    	});
+        	}
+        }
 	}
 };
 
@@ -80,7 +59,7 @@ exports.register = function(req, res){
 	}
 
 	// Check if a user with this username already exists
-	usernameExists(req.body.username, function(username_exists){
+	dbAdapter.getuserExists(req.body.username, function(username_exists){
 		if(username_exists){
 			return res.json({msg: "ERROR: Username already exists"});
 		} else {
@@ -99,14 +78,10 @@ exports.register = function(req, res){
 			// Login the user through the session
 			req.session.username = req.body.username;
 			// Add new user to the database
-			var newUserObj = new User(newUser);
-			newUserObj.save(function(err, newBook) {
-		        if (err) throw err;
-
-		        res.json({msg: "success"});
-		    });
+			dbAdapter.addNewUser(newUser, function(result){
+				res.json({msg: result});
+			});
 		}
-
 	});
 };
 
@@ -125,16 +100,20 @@ exports.newsFeed = function(req, res){
 exports.allPosts = function(req, res){};
 
 
-exports.getUserByName = function(req, res){};
-
-
-exports.getPostsForUser = function(req, res){};
-
 
 exports.makePost = function(req, res){};
 
 
 exports.rateUser = function(req, res){}; 
+
+
+exports.getCurrentUser = function(req, res){
+	if (!req.session.username){
+		return res.json({name: ""});
+	} else {
+		return res.json({name: req.session.username});
+	}
+};
 
 
 exports.test = function(req, res){							// TODO DELETE THIS FUNCTION LATER
