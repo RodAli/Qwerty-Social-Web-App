@@ -1,5 +1,4 @@
-{
-    "users":[
+[
     {
         "username": "user1",
         "pass": "pass1",
@@ -40,4 +39,4 @@
         "avgRating": 0,
         "numOfRatings": 0
     }
-]}
+]
