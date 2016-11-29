@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
-var routes = require('./src/routes');
 var path = require('path');
 var app = express();
 app.engine('html', require('ejs').renderFile);
@@ -25,20 +24,36 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// Routes
-app.get('/', routes.startUp);
-app.get('/getCurrentUser', routes.getCurrentUser);
-app.post('/login', routes.login);
-app.post('/logout', routes.logout);
-app.post('/register', routes.register);
-app.get('/newsFeed', routes.newsFeed);
-app.get('/allPosts', routes.allPosts);
-app.get('/getUserByName', routes.getUserByName); // Pass in query string??
-app.get('/getPostsForUser', routes.getPostsForUser);
-app.post('/makepost', routes.makePost);
-app.post('/rate', routes.rateUser);
+//Modules for project (Routes)
+var constants = require(__dirname + '/constants');
+var user = require(constants.user);
+var admin = require(constants.admin);
 
-app.get('/test', routes.test);													// TODO TESTING ROUTE DELETE LATER
+// Routes
+app.get('/', user.startUp);
+
+/*-----------USER INTERACTION-------------------*/
+app.post('/login', user.login);
+app.post('/logout', user.logout);
+app.post('/register', user.register);
+app.get('/newsFeed', user.newsFeed);
+app.get('/allPosts', user.allPosts);
+app.post('/makepost', user.makePost);
+app.post('/rate', user.rateUser);
+
+
+/*-----------ADMIN INTERACTION-------------------*/
+//Example admin interactions for now
+app.post('/changeUserPassword', admin.changeUserPassword);
+app.post('/deleteUser', admin.deleteUser);
+/*------------------------------*/
+
+//Above routes should perform these
+//app.get('/getUserByName', routes.getUserByName); // Pass in query string??
+//app.get('/getPostsForUser', routes.getPostsForUser);
+//app.get('/getCurrentUser', routes.getCurrentUser);
+
+app.get('/test', user.test);													// TODO TESTING ROUTE DELETE LATER
 
 
 // Start the server
