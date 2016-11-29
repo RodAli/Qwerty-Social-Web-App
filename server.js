@@ -5,6 +5,9 @@ var session = require('cookie-session');
 var routes = require('./src/routes');
 var path = require('path');
 var app = express();
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
 
 // Include views, css and scripts
 app.use(express.static(__dirname + '/src/assets'));
@@ -28,11 +31,14 @@ app.get('/getCurrentUser', routes.getCurrentUser);
 app.post('/login', routes.login);
 app.post('/logout', routes.logout);
 app.post('/register', routes.register);
+app.get('/newsFeed', routes.newsFeed);
 app.get('/allPosts', routes.allPosts);
 app.get('/getUserByName', routes.getUserByName); // Pass in query string??
 app.get('/getPostsForUser', routes.getPostsForUser);
 app.post('/makepost', routes.makePost);
 app.post('/rate', routes.rateUser);
+
+app.get('/test', routes.test);													// TODO TESTING ROUTE DELETE LATER
 
 
 // Start the server

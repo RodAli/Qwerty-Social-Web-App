@@ -13,7 +13,7 @@
 }
 
 img.loginImage {
-	width: 40%;
+	width: 20%;
 	border-radius: 50%;
 }
 
@@ -38,15 +38,14 @@ button {
     padding: 15px 20px;
     margin: 10px 0;
     border: none;
+    font-size: 150%;
 }
 
 
 #registerBtn {
-	width: auto;
-	padding: 12px 20px;
 	background-color: #f44336;
 }
 
-.loginContainer {
+.loginContainer, .registerContainer {
 	padding: 15px;
 }
