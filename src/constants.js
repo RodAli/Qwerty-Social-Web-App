@@ -4,7 +4,6 @@ exports.newsfeed = __dirname + '/assets/scripts/newsfeed';
 
 exports.user = __dirname + '/user';
 exports.admin = __dirname + '/admin';
-exports.event = __dirname + '/event';
 exports.dbAdapter = __dirname + '/db-adapter';
 
 //views
