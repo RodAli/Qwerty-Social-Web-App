@@ -43,6 +43,30 @@ exports.saveUser = function(user, callback){
     });
 };
 
+//----------ADMIN-----------
+exports.changePassword = function(user, newPassword, callback){
+    var result = User.update({'username' : user}, {$set:{'pass':newPassword}});
+
+    if (result.nModified === 1){
+        callback(constants.SUCCESS);
+    } else {
+        callback(constants.ERROR);
+    }
+};
+
+exports.removeUser = function(user, callback){
+    var result = User.remove({'username': user});
+
+    if (err) throw err;
+
+    if (result.nRemoved === 1){
+        callback(constants.SUCCESS);
+    } else {
+        callback(constants.ERROR);
+    }
+};
+
+
 exports.allUsers = function(callback){                  // DELETE THIS FUNCTION LATER
     User.find({}, function(err, allUsers) {
         if (err) throw err;

@@ -48,6 +48,7 @@ app.post('/rate', user.rateUser);
 //Example admin interactions for now
 app.post('/changeUserPassword', admin.changeUserPassword);
 app.post('/deleteUser', admin.deleteUser);
+app.post('/removePost', admin.removePost);
 /*------------------------------*/
 
 //Above routes should perform these
