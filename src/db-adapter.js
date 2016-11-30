@@ -5,7 +5,7 @@ var User = require('../models/user');
  * Return true if there exists a user in the database with the given
  * username, false otherwise.
  */
-exports.getUserExists = function(name, callback){
+exports.getUserExists = function(user_name, callback){
     // Find user in the databse
     User.findOne({username: user_name}, function(err, user){
         // Return whether they exist or not
@@ -15,8 +15,8 @@ exports.getUserExists = function(name, callback){
 };
 
 
-exports.getUserByName = function(name, callback){
-    User.findOne({username: name}, function(err, user){
+exports.getUserByUsername = function(user_name, callback){
+    User.findOne({username: user_name}, function(err, user){
         if (err) throw err;
         callback(user);
     });
@@ -25,7 +25,7 @@ exports.getUserByName = function(name, callback){
 exports.getPostsForUser = function(name, callback){};
 
 
-exports.addNewUser = function(UserObj, callback){
+exports.addNewUser = function(newUser, callback){
     var newUserObj = new User(newUser);
     newUserObj.save(function(err, newBook) {
         if (err) throw err;
@@ -34,3 +34,18 @@ exports.addNewUser = function(UserObj, callback){
     });
 };
 
+
+exports.saveUser = function(user, callback){
+    user.save(function(err, newBook) {
+        if (err) throw err;
+
+        callback(constants.SUCCESS);
+    });
+};
+
+exports.allUsers = function(callback){                  // DELETE THIS FUNCTION LATER
+    User.find({}, function(err, allUsers) {
+        if (err) throw err;
+        callback(allUsers);
+    });
+};

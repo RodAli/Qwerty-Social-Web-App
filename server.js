@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 //Modules for project (Routes)
-var constants = require(__dirname + '/constants');
+var constants = require(__dirname + '/src/constants');
 var user = require(constants.user);
 var admin = require(constants.admin);
 
@@ -36,6 +36,8 @@ app.get('/', user.startUp);
 app.post('/login', user.login);
 app.post('/logout', user.logout);
 app.post('/register', user.register);
+app.get('/currentUser', user.getCurrentUser);
+app.get('/getUser', user.getUser);
 app.get('/newsFeed', user.newsFeed);
 app.get('/allPosts', user.allPosts);
 app.post('/makepost', user.makePost);

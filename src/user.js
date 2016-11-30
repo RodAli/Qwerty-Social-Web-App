@@ -8,7 +8,7 @@ exports.startUp = function(req, res){
 	// Check if session already exists and log in user right away
 	if (req.session.hasOwnProperty("username")){
 		// Login user by sending to news feed page
-		res.render(constants.loginPage);			//res.render(__dirname + '/views/newsfeed.html');	change it to this later
+		res.render(constants.userViewPage);
 	} else {
 		// User not logged in, send to login page
 		res.render(constants.loginPage);
@@ -21,7 +21,7 @@ exports.login = function(req, res){
 	   	!req.body.hasOwnProperty('pass')){
 		return res.json({msg: "ERROR: username and password required"});
 	} else {
-		dbAdapter.getUserByName(req.body.username, function(err, user){
+		dbAdapter.getUserByUsername(req.body.username, function(user){
         	
         	// Check if user exists
         	if (user === null){
@@ -34,15 +34,15 @@ exports.login = function(req, res){
         		req.session.username = req.body.username;
         		return res.json({msg: "success"});
         	}
-        }
+        });
 	}
 };
 
 
 exports.logout = function(req, res){
+	// Remove the logged in session
 	req.session = null;
-	// Do more work here
-	res.send('success');
+	res.json({msg: 'success'});
 };
 
 
@@ -59,7 +59,7 @@ exports.register = function(req, res){
 	}
 
 	// Check if a user with this username already exists
-	dbAdapter.getuserExists(req.body.username, function(username_exists){
+	dbAdapter.getUserExists(req.body.username, function(username_exists){
 		if(username_exists){
 			return res.json({msg: "ERROR: Username already exists"});
 		} else {
@@ -89,10 +89,9 @@ exports.register = function(req, res){
 exports.newsFeed = function(req, res){
 	// If logged in
 	if (req.session.hasOwnProperty("username")){
-		console.log(req.session.username);
-		res.render(__dirname + '/views/newsfeed.html');
+		res.render(constants.userViewPage);
 	} else {
-		res.render(__dirname + '/views/login.html');
+		res.render(constants.loginPage);
 	}
 };
 
@@ -104,22 +103,79 @@ exports.allPosts = function(req, res){};
 exports.makePost = function(req, res){};
 
 
-exports.rateUser = function(req, res){}; 
-
-
-exports.getCurrentUser = function(req, res){
-	if (!req.session.username){
-		return res.json({name: ""});
+exports.rateUser = function(req, res){
+	if (!req.body.hasOwnProperty("username") ||
+		!req.body.hasOwnProperty("rating")){
+		return res.json({msg: "ERROR: Fields not met"});
 	} else {
-		return res.json({name: req.session.username});
+		dbAdapter.getUserByUsername(req.body.username, function(user){
+			// Calculate the new average for this user
+			console.log(user);
+			var new_average = user.avgRating;
+			new_average = new_average * user.numOfRatings;
+			new_average += req.body.rating;
+			user.numOfRatings += 1;
+			new_average = new_average / user.numOfRatings;
+			user.avgRating = new_average;
+			// Update the user in the database
+			dbAdapter.saveUser(user, function(){
+				return res.json({msg: "Success", avg: new_average});
+			});
+		});
+	}
+}; 
+
+/*
+ * Send back the JSON object of the user that is currently logged in.
+ */
+exports.getCurrentUser = function(req, res){
+	// Check if the user is logged in
+	if (!req.session.username){
+		return res.json({msg: "ERROR: User not logged in"});
+	} else {
+		// Get the object for this user from the database
+		dbAdapter.getUserByUsername(req.session.username, function(user){
+			if (user === null){
+				return res.json({msg: "ERROR: User logged in not found"});
+			} else {
+				// Send back the user if found
+				return res.json(user);
+			}
+		});
+	}
+};
+
+
+/*
+ * Get a json object of a user by passing in the username as a query.
+ */
+exports.getUser = function(req, res){
+	var username = null;
+	// if query is passed in get profile for that user
+	if (req.query.user){
+		username = req.query.user;
+	} else if (req.session.hasOwnProperty("username")){
+		// Sign in the user that is logged in
+		username = req.session.username;
+	}
+
+	if (username != null){
+		dbAdapter.getUserByUsername(username, function(user){
+			if (user == null){
+				return res.json({msg: "ERROR: User not found"});
+			} else {
+				return res.json(user);
+			}
+		});
+	} else {
+		return res.json({msg: "ERROR: User not passed in"});
 	}
 };
 
 
 exports.test = function(req, res){							// TODO DELETE THIS FUNCTION LATER
-	User.find({}, function(err, allUsers) {
-        if (err) throw err;
-        console.log(allUsers);
-        res.send(allUsers)
-    });
+	dbAdapter.allUsers(function(allUsers){
+		console.log(allUsers);
+		res.send(allUsers);
+	});
 };

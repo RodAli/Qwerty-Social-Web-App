@@ -56,7 +56,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify(addObj),
                 success: function result(res){
-                    if(res.msg == "success"){
+                    if(res.msg == "SUCCESS"){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/newsFeed';
                     } else {
