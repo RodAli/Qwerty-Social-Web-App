@@ -22,7 +22,14 @@ exports.getUserByUsername = function(user_name, callback){
     });
 };
 
-exports.getPostsForUser = function(name, callback){};
+
+exports.getUserByFullName = function(fullname, callback){
+    var name_array = fullname.split(" ");
+    User.findOne({fname: name_array[0], lname: name_array[1]}, function(err, user){
+        if (err) throw err;
+        callback(user);
+    });
+};
 
 
 exports.addNewUser = function(newUser, callback){

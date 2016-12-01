@@ -36,12 +36,15 @@ app.get('/', user.startUp);
 app.post('/login', user.login);
 app.post('/logout', user.logout);
 app.post('/register', user.register);
-app.get('/currentUser', user.getCurrentUser);
-app.get('/getUser', user.getUser);
 app.get('/newsFeed', user.newsFeed);
 app.get('/allPosts', user.allPosts);
 app.post('/makepost', user.makePost);
 app.post('/rate', user.rateUser);
+app.get('/currentUser', user.getCurrentUser);
+app.get('/getUser', user.getUser);
+app.post('/getUserByFullName', user.getUserByFullName);
+app.get('/allUsersFullNames', user.allUsersFullNames);
+app.get('/test', user.test);								// REMOVE THIS LATER
 
 
 /*-----------ADMIN INTERACTION-------------------*/
@@ -49,13 +52,6 @@ app.post('/rate', user.rateUser);
 app.post('/changeUserPassword', admin.changeUserPassword);
 app.post('/deleteUser', admin.deleteUser);
 /*------------------------------*/
-
-//Above routes should perform these
-//app.get('/getUserByName', routes.getUserByName); // Pass in query string??
-//app.get('/getPostsForUser', routes.getPostsForUser);
-//app.get('/getCurrentUser', routes.getCurrentUser);
-
-app.get('/test', user.test);													// TODO TESTING ROUTE DELETE LATER
 
 
 // Start the server
