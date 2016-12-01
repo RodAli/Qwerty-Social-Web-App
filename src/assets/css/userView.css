@@ -66,9 +66,18 @@ li a:hover{
 .border {
     border: 3px;
     border-style: groove;
+    background-color: #dbffff;
+    padding: 15px;
 }
 
-#rate_btn {
+#post_border {
+    border: 3px;
+    border-style: groove;
+    padding: 15px;
+    background-color: #dbffff;
+}
+
+#rate_btn, #send_btn {
 
     padding: 8px;
     background-color: #2be541;
@@ -81,4 +90,12 @@ li a:hover{
 #rate_btn:hover {
     cursor: pointer;
     background-color: #49ff5f;
+}
+
+textarea {
+    resize: none;
+}
+
+#user_select, #msg_box {
+    font-size: 16px;
 }

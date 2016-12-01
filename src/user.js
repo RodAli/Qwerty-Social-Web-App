@@ -96,11 +96,48 @@ exports.newsFeed = function(req, res){
 };
 
 
-exports.allPosts = function(req, res){};
+exports.allPosts = function(req, res){
+	var post_list = [];
+	// Get all the users from the database
+	dbAdapter.allUsers(function(allUsers){
+		// Loop through all the users
+		for (let i = 0; i < allUsers.length; i++){
+			// Loop through all the posts
+			for (let j = 0; j < allUsers[i].posts.length; j++){
+				post_list.push(allUsers[i].posts[j]);
+			}
+		}
+
+		return res.json(post_list);
+	});
+};
 
 
 
-exports.makePost = function(req, res){};
+exports.makePost = function(req, res){
+	if (!req.body.hasOwnProperty("toUser") ||
+		!req.body.hasOwnProperty("fromUser") ||
+		!req.body.hasOwnProperty("msg") ||
+		!req.body.hasOwnProperty("date")){
+		return res.json({msg: "ERROR: Fields not specified"});
+	} else {
+		// Get the user that is being posted to
+		dbAdapter.getUserByFullName(req.body.toUser, function(user){
+			var post = {
+				to: req.body.toUser,
+				from: req.body.fromUser,
+				msg: req.body.msg,
+				date: req.body.date
+			}
+			// Add the post to this users post page
+			user.posts.push(post);
+			// Update this user back to the database
+			dbAdapter.saveUser(user, function(){
+				return res.json({msg: "Success"});
+			});
+		});
+	}
+};
 
 
 exports.rateUser = function(req, res){
@@ -110,7 +147,6 @@ exports.rateUser = function(req, res){
 	} else {
 		dbAdapter.getUserByUsername(req.body.username, function(user){
 			// Calculate the new average for this user
-			console.log(user);
 			var new_average = user.avgRating;
 			new_average = new_average * user.numOfRatings;
 			new_average += req.body.rating;
@@ -173,9 +209,41 @@ exports.getUser = function(req, res){
 };
 
 
-exports.test = function(req, res){							// TODO DELETE THIS FUNCTION LATER
+exports.getUserByFullName = function(req, res){
+	if (!req.body.hasOwnProperty("fullname")){
+		console.log("lol");
+		return res.json({msg: "ERROR: Fields not met"});
+	} else {
+		dbAdapter.getUserByFullName(req.body.fullname, function(user){
+			if (user == null){
+				// Send back an error message that no user is found
+				return res.json({msg: "User not found"});
+			} else {
+				var returnUser = user;
+				// Delete the sensitive data fields
+				delete returnUser.pass;
+				return res.json(returnUser);
+			}
+		});
+	}
+};
+
+
+exports.allUsersFullNames = function(req, res){
 	dbAdapter.allUsers(function(allUsers){
-		console.log(allUsers);
-		res.send(allUsers);
+		var name_list = [];
+		// Add all the users fnames and lnames to the list
+		for (let i = 0; i < allUsers.length; i++){
+			name_list.push(allUsers[i].fname + " " + allUsers[i].lname);
+		}
+		return res.json(name_list);
+	});
+};
+
+
+exports.test = function(req, res){
+	dbAdapter.allUsers(function(allUsers){
+		console.log(allUsers)
+		return res.send(allUsers);
 	});
 };

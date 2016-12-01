@@ -13,8 +13,8 @@ var postSchema = new Schema(
         msg: {
             type: String, required: true
         },
-        bump: {
-            type: Number, default: 0
+        date: {
+            type: String, required: true
         }
     },
     {
