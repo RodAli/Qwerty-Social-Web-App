@@ -44,14 +44,16 @@ app.get('/currentUser', user.getCurrentUser);
 app.get('/getUser', user.getUser);
 app.post('/getUserByFullName', user.getUserByFullName);
 app.get('/allUsersFullNames', user.allUsersFullNames);
-app.get('/test', user.test);								// REMOVE THIS LATER
 
 
 /*-----------ADMIN INTERACTION-------------------*/
 //Example admin interactions for now
-app.post('/changeUserPassword', admin.changeUserPassword);
-app.post('/deleteUser', admin.deleteUser);
-app.post('/removePost', admin.removePost);
+app.post('/adminLogin', admin.adminLogin);
+app.post('/adminLogout', admin.adminLogout);
+app.get('/adminView', admin.getAdminView);
+app.get('/allUsersUsernames', admin.allUsersUsernames);
+app.post('/getUserByUsername', admin.getUserByUsername);
+app.post('/updateUser', admin.updateUser);
 /*------------------------------*/
 
 

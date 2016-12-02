@@ -17,6 +17,7 @@ img.loginImage {
 	border-radius: 50%;
 }
 
+/*--- Login view page styling ---*/
 form {
 	border: 4px solid #E6E6FA;
 }
@@ -46,6 +47,10 @@ button {
 	background-color: #f44336;
 }
 
-.loginContainer, .registerContainer {
+#admin_btn {
+	background-color: orange;
+}
+
+.container {
 	padding: 15px;
 }
