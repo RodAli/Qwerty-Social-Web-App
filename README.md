@@ -24,12 +24,12 @@ node server.js
 The server should be listening on port 3000 and should be ready!
 
 ## Some information to navigate through the app:
-A sample account to use to test logging in would be:
-Username: user1
-Password: pass1
+A sample account to use to test logging in would be:  
+Username: user1  
+Password: pass1  
 
-To test admin access the admin information is:
-Keycode: admin123
+To test admin access the admin information is:  
+Keycode: admin123  
 
 ## Features of the application
 
@@ -43,9 +43,9 @@ After a user logged in or created a new account, they should find themseleves in
 ##### View News Feed
 This view lists out all the posts sorted by most recent to latest that have been made in the system. The user can also view their own profile to see there own information and posts that have been directed towards them. The post format is as follows:
 
-[sending user] -> [receiving user]
-[Message]
-Date: [Date message sent]
+[sending user] -> [receiving user]  
+[Message]  
+Date: [Date message sent]  
 
 ##### Making a post
 To make a new post, you click the option in the taskbar to do so. In this view you can select any user in the program (other than yourself), write a message and send it to them. 
