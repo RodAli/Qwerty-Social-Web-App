@@ -17,6 +17,11 @@ mongoimport --db qwertydb --collection users --type json --file start_users.json
 mongo qwertydb --eval "db.dropDatabase()"
 ```
 
+### Install the required packages defined in package.json by executing:
+```
+npm install
+```
+
 ### To run the server, from the main root directory execute:
 ```
 node server.js
