@@ -9,6 +9,7 @@ exports.dbAdapter = __dirname + '/db-adapter';
 //views
 exports.loginPage = __dirname + '/views/login.html';
 exports.userViewPage = __dirname + '/views/userView.html';
+exports.adminViewPage = __dirname + '/views/adminView.html';
 
 
 /* --- Constants representing success / failure for asynchronous callbacks
@@ -16,3 +17,6 @@ exports.userViewPage = __dirname + '/views/userView.html';
 
 exports.SUCCESS = "SUCCESS";
 exports.ERROR = "ERROR";
+
+/* --- Admin keycode to have access --- */
+exports.ADMIN_KEYCODE = 'admin123';

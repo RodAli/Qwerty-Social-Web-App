@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	
+    // Button click event for logging in the user
     $('#submitBtn').click(function(){
 
 		var val_username = $('#inputUsername').val();
@@ -23,7 +24,7 @@ $(document).ready(function() {
         });
 	});
 
-
+    // Button click event for making the call to register the user
     $("#signup").submit(function(e) {
      
         e.preventDefault();
@@ -69,5 +70,27 @@ $(document).ready(function() {
         }
     });
 
+    // Button click event to allow admin access
+    $('#admin_btn').click(function(){
+        var keycode = $('#input_keycode').val();
 
+        // Attempt to log in admin
+        $.ajax({
+                url: '/adminLogin',
+                type: 'POST',
+                processData: false,
+                contentType: 'application/json',
+                data: JSON.stringify({'keycode': keycode}),
+                success: function result(res){
+                    if(res.msg == "Success"){
+                        // Redirect user to the newsFeed now that he is logged in
+                        document.location.href = '/adminView';
+                    } else {
+                        // Alert the user with the error msg that is returned
+                        alert(res.msg);
+                        location.reload(true);
+                    }
+                }
+            });
+    });
 });

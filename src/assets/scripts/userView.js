@@ -1,7 +1,9 @@
 // Variable to store the object of the the current user logged in
 var currentUser = null;
 
-
+/*
+ * Hide the items that are not needed in the view.
+ */
 function hideAllContainers(){
     $("#newsfeed_container").css("display", "none");
     $("#profile_container").css("display", "none");
@@ -248,9 +250,10 @@ $(document).ready(function() {
         });
     });
 
+    // Set up the search button click event
     $('#search_btn').click(function(e){
         e.preventDefault();
-
+        // Get the name that is being searched for
         var fullname = $('#search_bar').val();
         // Send the fullname to server to find a user
         $.ajax({

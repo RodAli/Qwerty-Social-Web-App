@@ -14,7 +14,9 @@ exports.getUserExists = function(user_name, callback){
     });
 };
 
-
+/*
+ * Get user from database with given username.
+ */
 exports.getUserByUsername = function(user_name, callback){
     User.findOne({username: user_name}, function(err, user){
         if (err) throw err;
@@ -22,7 +24,9 @@ exports.getUserByUsername = function(user_name, callback){
     });
 };
 
-
+/*
+ * Get user with from database with given fullname.
+ */
 exports.getUserByFullName = function(fullname, callback){
     var name_array = fullname.split(" ");
     User.findOne({fname: name_array[0], lname: name_array[1]}, function(err, user){
@@ -31,7 +35,9 @@ exports.getUserByFullName = function(fullname, callback){
     });
 };
 
-
+/*
+ * Add a new user in to the database.
+ */
 exports.addNewUser = function(newUser, callback){
     var newUserObj = new User(newUser);
     newUserObj.save(function(err, newBook) {
@@ -41,7 +47,9 @@ exports.addNewUser = function(newUser, callback){
     });
 };
 
-
+/*
+ * Save an existing users information in the database.
+ */
 exports.saveUser = function(user, callback){
     user.save(function(err, newBook) {
         if (err) throw err;
@@ -50,31 +58,10 @@ exports.saveUser = function(user, callback){
     });
 };
 
-//----------ADMIN-----------
-exports.changePassword = function(user, newPassword, callback){
-    var result = User.update({'username' : user}, {$set:{'pass':newPassword}});
-
-    if (result.nModified === 1){
-        callback(constants.SUCCESS);
-    } else {
-        callback(constants.ERROR);
-    }
-};
-
-exports.removeUser = function(user, callback){
-    var result = User.remove({'username': user});
-
-    if (err) throw err;
-
-    if (result.nRemoved === 1){
-        callback(constants.SUCCESS);
-    } else {
-        callback(constants.ERROR);
-    }
-};
-
-
-exports.allUsers = function(callback){                  // DELETE THIS FUNCTION LATER
+/*
+ * Return a list of all the users in the database.
+ */
+exports.allUsers = function(callback){
     User.find({}, function(err, allUsers) {
         if (err) throw err;
         callback(allUsers);

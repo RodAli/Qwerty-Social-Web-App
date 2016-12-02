@@ -3,7 +3,9 @@
 var constants = require(__dirname + '/constants');
 var dbAdapter = require(constants.dbAdapter);
 
-
+/*
+ * Direct user to proper view depending on if they are logged in or not.
+ */
 exports.startUp = function(req, res){
 	// Check if session already exists and log in user right away
 	if (req.session.hasOwnProperty("username")){
@@ -15,7 +17,9 @@ exports.startUp = function(req, res){
 	}
 };
 
-
+/*
+ * Check if given username and password are correct and login using a session.
+ */
 exports.login = function(req, res){
 	if (!req.body.hasOwnProperty('username') ||
 	   	!req.body.hasOwnProperty('pass')){
@@ -38,7 +42,9 @@ exports.login = function(req, res){
 	}
 };
 
-
+/*
+ * Remove the logged in session to successfully log out this user.
+ */
 exports.logout = function(req, res){
 	// Remove the logged in session
 	req.session = null;
@@ -46,7 +52,9 @@ exports.logout = function(req, res){
 };
 
 
-
+/*
+ * Register a new user in the database with the given information.
+ */
 exports.register = function(req, res){
 	
 	// Check if proper fields were passed in
@@ -85,7 +93,9 @@ exports.register = function(req, res){
 	});
 };
 
-
+/*
+ * If the user is logged determined by the session, then render user view page.
+ */
 exports.newsFeed = function(req, res){
 	// If logged in
 	if (req.session.hasOwnProperty("username")){
@@ -95,7 +105,9 @@ exports.newsFeed = function(req, res){
 	}
 };
 
-
+/*
+ * Return a list of all the posts in the application.
+ */
 exports.allPosts = function(req, res){
 	var post_list = [];
 	// Get all the users from the database
@@ -113,7 +125,9 @@ exports.allPosts = function(req, res){
 };
 
 
-
+/*
+ * Store a given post information under the user that it is sent to in the database.
+ */
 exports.makePost = function(req, res){
 	if (!req.body.hasOwnProperty("toUser") ||
 		!req.body.hasOwnProperty("fromUser") ||
@@ -139,7 +153,9 @@ exports.makePost = function(req, res){
 	}
 };
 
-
+/*
+ * Accumulate the rating average of the user with given username.
+ */
 exports.rateUser = function(req, res){
 	if (!req.body.hasOwnProperty("username") ||
 		!req.body.hasOwnProperty("rating")){
@@ -208,10 +224,11 @@ exports.getUser = function(req, res){
 	}
 };
 
-
+/*
+ * Return a user object of the user that has the full name as requested.
+ */
 exports.getUserByFullName = function(req, res){
 	if (!req.body.hasOwnProperty("fullname")){
-		console.log("lol");
 		return res.json({msg: "ERROR: Fields not met"});
 	} else {
 		dbAdapter.getUserByFullName(req.body.fullname, function(user){
@@ -228,7 +245,9 @@ exports.getUserByFullName = function(req, res){
 	}
 };
 
-
+/*
+ * Return a list of full names of all the users in the database.
+ */
 exports.allUsersFullNames = function(req, res){
 	dbAdapter.allUsers(function(allUsers){
 		var name_list = [];
@@ -237,13 +256,5 @@ exports.allUsersFullNames = function(req, res){
 			name_list.push(allUsers[i].fname + " " + allUsers[i].lname);
 		}
 		return res.json(name_list);
-	});
-};
-
-
-exports.test = function(req, res){
-	dbAdapter.allUsers(function(allUsers){
-		console.log(allUsers)
-		return res.send(allUsers);
 	});
 };
