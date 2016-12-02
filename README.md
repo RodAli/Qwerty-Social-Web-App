@@ -43,9 +43,9 @@ After a user logged in or created a new account, they should find themseleves in
 ##### View News Feed
 This view lists out all the posts sorted by most recent to latest that have been made in the system. The user can also view their own profile to see there own information and posts that have been directed towards them. The post format is as follows:
 
-<sending user> -> <receiving user>
-<Message>
-Date: <Date message sent>
+[sending user] -> [receiving user]
+[Message]
+Date: [Date message sent]
 
 ##### Making a post
 To make a new post, you click the option in the taskbar to do so. In this view you can select any user in the program (other than yourself), write a message and send it to them. 
