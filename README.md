@@ -64,3 +64,5 @@ Finally the last operation you can do is logout by clicking so in the navigation
 ### Admin View
 
 Once by entering the keycode mentioned above the admin will themself in the admin view. In this view the admin will be able to select user's usernames from a dropdown menu and load their information. From here the admin can change anything from their name, aboutme and password. When done making changes the admin clicks "Update User" and the changes the user will be saved in the database. Then after when the admin is complete, they can logout removing the administrative rights session.  
+
+The admin can also delete a respective user from the database by clicking the "Delete User" button. 
