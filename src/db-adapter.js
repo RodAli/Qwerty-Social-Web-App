@@ -48,6 +48,14 @@ exports.addNewUser = function(newUser, callback){
 };
 
 /*
+* Deletes a user by username.
+*/
+exports.deleteUser = function(user){
+    console.log(user.username)
+    User.remove({username: user.username});
+};
+
+/*
  * Save an existing users information in the database.
  */
 exports.saveUser = function(user, callback){

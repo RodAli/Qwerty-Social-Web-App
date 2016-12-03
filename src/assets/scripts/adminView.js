@@ -8,6 +8,7 @@ function displayUserInfo(user){
 	$('#lname_field').val(user.lname);
 	$('#aboutme_field').val(user.aboutme);
 	$('#update_btn').css("display", "inline");
+    $('#delete_btn').css("display", "inline");    
 }
 
 // Ready the dropdown and buttons at page load
@@ -78,6 +79,30 @@ $(document).ready(function() {
         });
 
 	});
+
+    // Set up the delete user button for the admin
+    $('#delete_btn').click(function(){
+        var username = $("#username_select :selected").text();
+
+        // Delete the user on the server
+        $.ajax({
+            url: "/deleteUser",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({'username': username}),
+            success: function result(res) {
+                if (res.msg == "Success"){
+                    // If successful alert the user
+                    alert("User deleted successfully!");
+                    location.reload(true);
+                } else {
+                    alert(res.msg);
+                }
+            }
+        });
+
+    });
 
 	// Set up the logout button for the admin
 	$('#logout_btn').click(function(){
