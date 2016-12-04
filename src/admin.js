@@ -13,7 +13,7 @@ exports.adminLogin = function(req, res){
 		if (req.body.keycode == constants.ADMIN_KEYCODE){
 			// Mark the session as a valid admin
 			req.session.admin = true;
-			return res.json({msg: "Success"});
+			return res.json({msg: constants.SUCCESS});
 		} else {
 			return res.json({msg: "Admin keycode incorrect"});
 		}
@@ -26,7 +26,7 @@ exports.adminLogin = function(req, res){
 exports.adminLogout = function(req, res){
 	// Remove the admin session
 	req.session = null;
-	return res.json({msg: "Success"});
+	return res.json({msg: constants.SUCCESS});
 };
 
 /*
@@ -104,7 +104,7 @@ exports.updateUser = function(req, res){
 
 				// Save the user back in the database
 				dbAdapter.saveUser(user, function(){
-					return res.json({msg: "Success"});
+					return res.json({msg: constants.SUCCESS});
 				});
 			}
 		});
@@ -125,7 +125,7 @@ exports.deleteUser = function(req, res){
 
 			//Delete user
 			dbAdapter.deleteUser(user);
-			return res.json({msg: "Success"});
+			return res.json({msg: constants.SUCCESS});
 		}
 	});
 

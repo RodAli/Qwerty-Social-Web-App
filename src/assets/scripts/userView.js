@@ -1,3 +1,5 @@
+var constants = require('../../constants');
+
 // Variable to store the object of the the current user logged in
 var currentUser = null;
 
@@ -83,7 +85,7 @@ function incrementRating(username, rate_value, callback){
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({'username': username, 'rating': rate_value}),
         success: function result(res) {
-            if (res.msg == "Success"){
+            if (res.msg == constants.SUCCESS){
                 // Pass in the new average of this user
                 callback(res.avg);
             } else {
@@ -182,7 +184,7 @@ function setupPostView(){
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({'toUser': userTo, 'fromUser': userFrom, 'msg': msg, 'date': date}),
                 success: function result(res) {
-                    if (res.msg == "Success"){
+                    if (res.msg == constants.SUCCESS){
                         // Clear the fields
                         $("#msg_box").val("");
                         // Switch to news feed view

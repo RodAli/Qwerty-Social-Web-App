@@ -36,7 +36,7 @@ exports.login = function(req, res){
         	} else {
         		// Login the user, by adding to the session
         		req.session.username = req.body.username;
-        		return res.json({msg: "success"});
+        		return res.json({msg: constants.SUCCESS});
         	}
         });
 	}
@@ -48,7 +48,7 @@ exports.login = function(req, res){
 exports.logout = function(req, res){
 	// Remove the logged in session
 	req.session = null;
-	res.json({msg: 'success'});
+	res.json({msg: constants.SUCCESS});
 };
 
 
@@ -147,7 +147,7 @@ exports.makePost = function(req, res){
 			user.posts.push(post);
 			// Update this user back to the database
 			dbAdapter.saveUser(user, function(){
-				return res.json({msg: "Success"});
+				return res.json({msg: constants.SUCCESS});
 			});
 		});
 	}
@@ -171,7 +171,7 @@ exports.rateUser = function(req, res){
 			user.avgRating = new_average;
 			// Update the user in the database
 			dbAdapter.saveUser(user, function(){
-				return res.json({msg: "Success", avg: new_average});
+				return res.json({msg: constants.SUCCESS, avg: new_average});
 			});
 		});
 	}

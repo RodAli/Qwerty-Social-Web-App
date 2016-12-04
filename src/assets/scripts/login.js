@@ -1,3 +1,5 @@
+var constants = require('../../constants');
+
 $(document).ready(function() {
 	
     // Button click event for logging in the user
@@ -12,7 +14,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({'username': val_username, 'pass': val_password}),
             success: function result(res) {
-                if (res.msg == "success"){
+                if (res.msg == constants.SUCCESS){
                     // Redirect user to the newsFeed now that he is logged in
                     document.location.href = '/newsFeed';
                 } else {
@@ -57,7 +59,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify(addObj),
                 success: function result(res){
-                    if(res.msg == "SUCCESS"){
+                    if(res.msg == constants.SUCCESS){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/newsFeed';
                     } else {
@@ -82,7 +84,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify({'keycode': keycode}),
                 success: function result(res){
-                    if(res.msg == "Success"){
+                    if(res.msg == constants.SUCCESS){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/adminView';
                     } else {
