@@ -54,6 +54,7 @@ app.get('/adminView', admin.getAdminView);
 app.get('/allUsersUsernames', admin.allUsersUsernames);
 app.post('/getUserByUsername', admin.getUserByUsername);
 app.post('/updateUser', admin.updateUser);
+app.post('/deleteUser', admin.deleteUser)
 /*------------------------------*/
 
 

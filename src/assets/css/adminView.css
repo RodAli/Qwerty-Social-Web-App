@@ -3,6 +3,10 @@
 	display: none;
 }
 
+#delete_btn {
+	display: none;
+}
+
 button {
 	cursor: pointer;
 	background-color: #8BAABC;
@@ -28,4 +32,8 @@ input, select, label {
 
 #update_btn {
 	background-color: green;
+}
+
+#delete_btn {
+	background-color: blue;
 }
