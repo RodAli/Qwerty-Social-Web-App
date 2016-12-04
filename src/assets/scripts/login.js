@@ -31,9 +31,9 @@ $(document).ready(function() {
      
         e.preventDefault();
 
-        var firstname = $("#first_name").val();
-        var lastname = $("#last_name").val();
-        var username = $("#user_name").val();
+        var firstname = $("#first_name").val().trim();
+        var lastname = $("#last_name").val().trim();
+        var username = $("#user_name").val().trim();
         var p_word1 = $("#pw1").val();
         var p_word2 = $("#pw2").val();
         var about_me = $("#about_me").val();

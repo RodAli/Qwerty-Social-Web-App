@@ -110,7 +110,7 @@ function readyDropdown(){
             name_list.sort();
             for(let i = 0; i < name_list.length; i++){
                 // Dont add the current user to the list, to not let him send messages to himself
-                if (name_list[i] !== currentUser.fname + " " + currentUser.lname){
+                if (name_list[i] != currentUser.fname + " " + currentUser.lname + " (" + currentUser.username + ")"){
                     $('#user_select').append($('<option>', {
                         value: name_list[i],
                         text : name_list[i] 

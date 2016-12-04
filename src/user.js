@@ -253,7 +253,7 @@ exports.allUsersFullNames = function(req, res){
 		var name_list = [];
 		// Add all the users fnames and lnames to the list
 		for (let i = 0; i < allUsers.length; i++){
-			name_list.push(allUsers[i].fname + " " + allUsers[i].lname);
+			name_list.push(allUsers[i].fname + " " + allUsers[i].lname + " (" + allUsers[i].username + ")");
 		}
 		return res.json(name_list);
 	});
