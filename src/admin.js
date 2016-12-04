@@ -114,19 +114,21 @@ exports.updateUser = function(req, res){
 /*
 * Deletes the user with given username.
 */
-
 exports.deleteUser = function(req, res){
-	console.log(req.body.username);
+	if (!req.body.hasOwnProperty('username')){
+		return res.json({msg: "ERROR: fields required"});
+	} else {
+		// Get the user by his username
+		dbAdapter.getUserByUsername(req.body.username, function(user){
+			if (user === null){
+				return res.json({msg: "ERROR: user does not exist"});
+			} else {
 
-	dbAdapter.getUserByUsername(req.body.username, function(user){
-		if (user === null){
-			return res.json({msg: "ERROR: user does not exist"});
-		} else {
-
-			//Delete user
-			dbAdapter.deleteUser(user);
-			return res.json({msg: constants.SUCCESS});
-		}
-	});
-
-}
+				//Delete user
+				dbAdapter.deleteUser(user, function(){
+					return res.json({msg: constants.SUCCESS});
+				});
+			}
+		});
+	}
+};
