@@ -1,4 +1,4 @@
-var constants = require('../../constants');
+var success = "SUCCESS";
 
 $(document).ready(function() {
 	
@@ -14,7 +14,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({'username': val_username, 'pass': val_password}),
             success: function result(res) {
-                if (res.msg === constants.SUCCESS){
+                if (res.msg === success){
                     // Redirect user to the newsFeed now that he is logged in
                     document.location.href = '/newsFeed';
                 } else {
@@ -59,7 +59,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify(addObj),
                 success: function result(res){
-                    if(res.msg === constants.SUCCESS){
+                    if(res.msg === success){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/newsFeed';
                     } else {
@@ -75,7 +75,6 @@ $(document).ready(function() {
     // Button click event to allow admin access
     $('#admin_btn').click(function(){
         var keycode = $('#input_keycode').val();
-
         // Attempt to log in admin
         $.ajax({
                 url: '/adminLogin',
@@ -83,8 +82,8 @@ $(document).ready(function() {
                 processData: false,
                 contentType: 'application/json',
                 data: JSON.stringify({'keycode': keycode}),
-                success: function result(res){
-                    if(res.msg === constants.SUCCESS){
+                success: function result(res, status){
+                    if(res.msg === success){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/adminView';
                     } else {
