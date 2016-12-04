@@ -50,9 +50,12 @@ exports.addNewUser = function(newUser, callback){
 /*
 * Deletes a user by username.
 */
-exports.deleteUser = function(user){
-    console.log(user.username)
-    User.remove({username: user.username});
+exports.deleteUser = function(user, callback){
+    User.remove({username: user.username}, function(err){
+        if (err) throw err;
+
+        callback(constants.SUCCESS);
+    });
 };
 
 /*

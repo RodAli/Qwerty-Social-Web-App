@@ -27,7 +27,7 @@ input, select, label {
 }
 
 #logout_btn {
-	background-color: #f44336;
+	background-color: blue;
 }
 
 #update_btn {
@@ -35,5 +35,5 @@ input, select, label {
 }
 
 #delete_btn {
-	background-color: blue;
+	background-color: #f44336;
 }
