@@ -36,7 +36,7 @@ exports.login = function(req, res){
         	} else {
         		// Login the user, by adding to the session
         		req.session.username = req.body.username;
-        		return res.json({msg: "success"});
+        		return res.json({msg: constants.SUCCESS});
         	}
         });
 	}
@@ -48,7 +48,7 @@ exports.login = function(req, res){
 exports.logout = function(req, res){
 	// Remove the logged in session
 	req.session = null;
-	res.json({msg: 'success'});
+	res.json({msg: constants.SUCCESS});
 };
 
 
@@ -147,7 +147,7 @@ exports.makePost = function(req, res){
 			user.posts.push(post);
 			// Update this user back to the database
 			dbAdapter.saveUser(user, function(){
-				return res.json({msg: "Success"});
+				return res.json({msg: constants.SUCCESS});
 			});
 		});
 	}
@@ -171,7 +171,7 @@ exports.rateUser = function(req, res){
 			user.avgRating = new_average;
 			// Update the user in the database
 			dbAdapter.saveUser(user, function(){
-				return res.json({msg: "Success", avg: new_average});
+				return res.json({msg: constants.SUCCESS, avg: new_average});
 			});
 		});
 	}
@@ -211,9 +211,9 @@ exports.getUser = function(req, res){
 		username = req.session.username;
 	}
 
-	if (username != null){
+	if (username !== null){
 		dbAdapter.getUserByUsername(username, function(user){
-			if (user == null){
+			if (user === null){
 				return res.json({msg: "ERROR: User not found"});
 			} else {
 				return res.json(user);
@@ -232,7 +232,7 @@ exports.getUserByFullName = function(req, res){
 		return res.json({msg: "ERROR: Fields not met"});
 	} else {
 		dbAdapter.getUserByFullName(req.body.fullname, function(user){
-			if (user == null){
+			if (user === null){
 				// Send back an error message that no user is found
 				return res.json({msg: "User not found"});
 			} else {

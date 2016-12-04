@@ -1,3 +1,4 @@
+var success = "SUCCESS";
 /*
  * Function do display all the users information on the view, for the admin.
  */
@@ -68,7 +69,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({'username': username, 'pass': pass, 'fname': fname, 'lname': lname, 'aboutme': aboutme}),
             success: function result(res) {
-                if (res.msg == "Success"){
+                if (res.msg === success){
                 	// If successful alert the user
                 	alert("User updated successfully");
                 	location.reload(true);
@@ -92,7 +93,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({'username': username}),
             success: function result(res) {
-                if (res.msg == "Success"){
+                if (res.msg === success){
                     // If successful alert the user
                     alert("User deleted successfully!");
                     location.reload(true);

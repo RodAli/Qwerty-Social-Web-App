@@ -10,10 +10,10 @@ exports.adminLogin = function(req, res){
 	if (!req.body.hasOwnProperty('keycode')){
 		return res.json({msg: "ERROR: keycode required"});
 	} else {
-		if (req.body.keycode == constants.ADMIN_KEYCODE){
+		if (req.body.keycode === constants.ADMIN_KEYCODE){
 			// Mark the session as a valid admin
 			req.session.admin = true;
-			return res.json({msg: "Success"});
+			return res.json({msg: constants.SUCCESS});
 		} else {
 			return res.json({msg: "Admin keycode incorrect"});
 		}
@@ -26,7 +26,7 @@ exports.adminLogin = function(req, res){
 exports.adminLogout = function(req, res){
 	// Remove the admin session
 	req.session = null;
-	return res.json({msg: "Success"});
+	return res.json({msg: constants.SUCCESS});
 };
 
 /*
@@ -66,7 +66,7 @@ exports.getUserByUsername = function(req, res){
 	} else {
 		dbAdapter.getUserByUsername(req.body.username, function(user){
 			// Return the user if found
-			if (user == null){
+			if (user === null){
 				return res.json({msg: "ERROR: User not found"});
 			} else {
 				return res.json(user);
@@ -88,7 +88,7 @@ exports.updateUser = function(req, res){
 	} else {
 		// Get the user from the database
 		dbAdapter.getUserByUsername(req.body.username, function(user){
-			if (user == null){
+			if (user === null){
 				return res.json({msg: "ERROR: user does not exist"});
 			} else {
 				// Set the new information
@@ -104,7 +104,7 @@ exports.updateUser = function(req, res){
 
 				// Save the user back in the database
 				dbAdapter.saveUser(user, function(){
-					return res.json({msg: "Success"});
+					return res.json({msg: constants.SUCCESS});
 				});
 			}
 		});
@@ -119,13 +119,13 @@ exports.deleteUser = function(req, res){
 	console.log(req.body.username);
 
 	dbAdapter.getUserByUsername(req.body.username, function(user){
-		if (user == null){
+		if (user === null){
 			return res.json({msg: "ERROR: user does not exist"});
 		} else {
 
 			//Delete user
 			dbAdapter.deleteUser(user);
-			return res.json({msg: "Success"});
+			return res.json({msg: constants.SUCCESS});
 		}
 	});
 
