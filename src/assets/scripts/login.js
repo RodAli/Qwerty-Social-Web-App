@@ -14,7 +14,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({'username': val_username, 'pass': val_password}),
             success: function result(res) {
-                if (res.msg == constants.SUCCESS){
+                if (res.msg === constants.SUCCESS){
                     // Redirect user to the newsFeed now that he is logged in
                     document.location.href = '/newsFeed';
                 } else {
@@ -38,7 +38,7 @@ $(document).ready(function() {
         var p_word2 = $("#pw2").val();
         var about_me = $("#about_me").val();
 
-        if(p_word1 != p_word2){
+        if(p_word1 !== p_word2){
             alert('Sorry, the passwords you have entered do not match.');
             location.reload(true);
         } else {
@@ -59,7 +59,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify(addObj),
                 success: function result(res){
-                    if(res.msg == constants.SUCCESS){
+                    if(res.msg === constants.SUCCESS){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/newsFeed';
                     } else {
@@ -84,7 +84,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: JSON.stringify({'keycode': keycode}),
                 success: function result(res){
-                    if(res.msg == constants.SUCCESS){
+                    if(res.msg === constants.SUCCESS){
                         // Redirect user to the newsFeed now that he is logged in
                         document.location.href = '/adminView';
                     } else {

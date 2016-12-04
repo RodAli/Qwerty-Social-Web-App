@@ -58,7 +58,7 @@ function displayUserProfile(user){
     var post_list = user.posts;
 
     // If there are no posts, mention it in the view
-    if (post_list.length == 0){
+    if (post_list.length === 0){
         $('#postwall_container').append("<div class='border'><h3>No Posts Yet...</h3></div>");
     } else {
         post_list.sort(function(a, b){
@@ -85,7 +85,7 @@ function incrementRating(username, rate_value, callback){
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({'username': username, 'rating': rate_value}),
         success: function result(res) {
-            if (res.msg == constants.SUCCESS){
+            if (res.msg === constants.SUCCESS){
                 // Pass in the new average of this user
                 callback(res.avg);
             } else {
@@ -110,7 +110,7 @@ function readyDropdown(){
             name_list.sort();
             for(let i = 0; i < name_list.length; i++){
                 // Dont add the current user to the list, to not let him send messages to himself
-                if (name_list[i] != currentUser.fname + " " + currentUser.lname){
+                if (name_list[i] !== currentUser.fname + " " + currentUser.lname){
                     $('#user_select').append($('<option>', {
                         value: name_list[i],
                         text : name_list[i] 
@@ -136,7 +136,7 @@ function displayNewsFeed(){
         type: "GET",
         success: function(post_list) {
             // If there are no posts, then mention it in view
-            if (post_list.length == 0){
+            if (post_list.length === 0){
                 $('#posts_container').append("<div class='border'><h3>No Posts Yet...</h3></div>");
             } else {
                 // Sort the posts on date, newest to oldest
@@ -170,7 +170,7 @@ function setupPostView(){
         var date = new Date().toLocaleString();
 
         // Check if the msg is just whitespace
-        if (msg.trim() == ""){
+        if (msg.trim() === ""){
             alert("Please type characters in the text field");
             $("msg_box").val("");
             $("msg_box").focus();
@@ -184,7 +184,7 @@ function setupPostView(){
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({'toUser': userTo, 'fromUser': userFrom, 'msg': msg, 'date': date}),
                 success: function result(res) {
-                    if (res.msg == constants.SUCCESS){
+                    if (res.msg === constants.SUCCESS){
                         // Clear the fields
                         $("#msg_box").val("");
                         // Switch to news feed view

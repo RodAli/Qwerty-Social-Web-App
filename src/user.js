@@ -211,9 +211,9 @@ exports.getUser = function(req, res){
 		username = req.session.username;
 	}
 
-	if (username != null){
+	if (username !== null){
 		dbAdapter.getUserByUsername(username, function(user){
-			if (user == null){
+			if (user === null){
 				return res.json({msg: "ERROR: User not found"});
 			} else {
 				return res.json(user);
@@ -232,7 +232,7 @@ exports.getUserByFullName = function(req, res){
 		return res.json({msg: "ERROR: Fields not met"});
 	} else {
 		dbAdapter.getUserByFullName(req.body.fullname, function(user){
-			if (user == null){
+			if (user === null){
 				// Send back an error message that no user is found
 				return res.json({msg: "User not found"});
 			} else {
