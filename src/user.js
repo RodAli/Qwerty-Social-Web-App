@@ -7,6 +7,7 @@ var dbAdapter = require(constants.dbAdapter);
  * Direct user to proper view depending on if they are logged in or not.
  */
 exports.startUp = function(req, res){
+
 	// Check if session already exists and log in user right away
 	if (req.session.hasOwnProperty("username")){
 		// Login user by sending to news feed page
@@ -15,18 +16,20 @@ exports.startUp = function(req, res){
 		// User not logged in, send to login page
 		res.render(constants.loginPage);
 	}
+
 };
 
 /*
  * Check if given username and password are correct and login using a session.
  */
 exports.login = function(req, res){
+	//Checks that the username and password are given
 	if (!req.body.hasOwnProperty('username') ||
 	   	!req.body.hasOwnProperty('pass')){
 		return res.json({msg: "ERROR: username and password required"});
 	} else {
-		dbAdapter.getUserByUsername(req.body.username, function(user){
-        	
+		//Finds the correct user
+		dbAdapter.getUserByUsername(req.body.username, function(user){        	
         	// Check if user exists
         	if (user === null){
         		return res.json({msg: "ERROR: Username incorrect"});
@@ -37,7 +40,7 @@ exports.login = function(req, res){
         		// Login the user, by adding to the session
         		req.session.username = req.body.username;
         		return res.json({msg: constants.SUCCESS});
-        	}
+        	}        	
         });
 	}
 };
@@ -91,24 +94,28 @@ exports.register = function(req, res){
 			});
 		}
 	});
+
 };
 
 /*
  * If the user is logged determined by the session, then render user view page.
  */
 exports.newsFeed = function(req, res){
+
 	// If logged in
 	if (req.session.hasOwnProperty("username")){
 		res.render(constants.userViewPage);
 	} else {
 		res.render(constants.loginPage);
 	}
+
 };
 
 /*
  * Return a list of all the posts in the application.
  */
 exports.allPosts = function(req, res){
+
 	var post_list = [];
 	// Get all the users from the database
 	dbAdapter.allUsers(function(allUsers){
@@ -122,6 +129,7 @@ exports.allPosts = function(req, res){
 
 		return res.json(post_list);
 	});
+
 };
 
 
@@ -129,6 +137,8 @@ exports.allPosts = function(req, res){
  * Store a given post information under the user that it is sent to in the database.
  */
 exports.makePost = function(req, res){
+
+	//Checks that the required fields are provided
 	if (!req.body.hasOwnProperty("toUser") ||
 		!req.body.hasOwnProperty("fromUser") ||
 		!req.body.hasOwnProperty("msg") ||
@@ -151,12 +161,15 @@ exports.makePost = function(req, res){
 			});
 		});
 	}
+
 };
 
 /*
  * Accumulate the rating average of the user with given username.
  */
 exports.rateUser = function(req, res){
+
+	//Checks that the required fields are provided
 	if (!req.body.hasOwnProperty("username") ||
 		!req.body.hasOwnProperty("rating")){
 		return res.json({msg: "ERROR: Fields not met"});
@@ -175,18 +188,21 @@ exports.rateUser = function(req, res){
 			});
 		});
 	}
+
 }; 
 
 /*
  * Send back the JSON object of the user that is currently logged in.
  */
 exports.getCurrentUser = function(req, res){
+
 	// Check if the user is logged in
 	if (!req.session.username){
 		return res.json({msg: "ERROR: User not logged in"});
 	} else {
 		// Get the object for this user from the database
 		dbAdapter.getUserByUsername(req.session.username, function(user){
+			//If the user doesnt exist
 			if (user === null){
 				return res.json({msg: "ERROR: User logged in not found"});
 			} else {
@@ -195,6 +211,7 @@ exports.getCurrentUser = function(req, res){
 			}
 		});
 	}
+
 };
 
 
@@ -202,6 +219,7 @@ exports.getCurrentUser = function(req, res){
  * Get a json object of a user by passing in the username as a query.
  */
 exports.getUser = function(req, res){
+
 	var username = null;
 	// if query is passed in get profile for that user
 	if (req.query.user){
@@ -212,6 +230,7 @@ exports.getUser = function(req, res){
 	}
 
 	if (username !== null){
+		//If the user exists
 		dbAdapter.getUserByUsername(username, function(user){
 			if (user === null){
 				return res.json({msg: "ERROR: User not found"});
@@ -220,14 +239,18 @@ exports.getUser = function(req, res){
 			}
 		});
 	} else {
+		//If no user was provided
 		return res.json({msg: "ERROR: User not passed in"});
 	}
+
 };
 
 /*
  * Return a user object of the user that has the full name as requested.
  */
 exports.getUserByFullName = function(req, res){
+
+	//Checks that the full name was provided
 	if (!req.body.hasOwnProperty("fullname")){
 		return res.json({msg: "ERROR: Fields not met"});
 	} else {
@@ -243,12 +266,14 @@ exports.getUserByFullName = function(req, res){
 			}
 		});
 	}
+
 };
 
 /*
  * Return a list of full names of all the users in the database.
  */
 exports.allUsersFullNames = function(req, res){
+
 	dbAdapter.allUsers(function(allUsers){
 		var name_list = [];
 		// Add all the users fnames and lnames to the list
@@ -257,4 +282,5 @@ exports.allUsersFullNames = function(req, res){
 		}
 		return res.json(name_list);
 	});
+	
 };
